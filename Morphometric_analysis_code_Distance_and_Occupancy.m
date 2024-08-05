@@ -77,7 +77,8 @@ for xlink = [0 0.25 0.5 0.75 1 1.25 1.5 1.75 2]
             ntpoints = 1;
             xresolution = 0.02122; % x dimension of voxel size chosen to match pixel size of pseudo fluorescence images
             yresolution = 0.02118; % y dimension of voxel size chosen to match pixel size of pseudo fluorescence images
-
+            voxel_size = 0.0212;
+            
             lowDimX = (xresolution/2):xresolution:(xdim-xresolution/2);
             lowDimY = (yresolution/2):yresolution:(ydim-yresolution/2);
             kernelDensity = cell(length(lowDimY),length(lowDimX));
@@ -117,7 +118,7 @@ for xlink = [0 0.25 0.5 0.75 1 1.25 1.5 1.75 2]
                 distmap(distmap == 0) = NaN;
                 med_dist = median(distmap,'all','omitnan');
 
-            all_median_per_site{file,xlinker_id} = med_dist*0.0212; %Distance for each for each simulation trajectory for a given crosslinker density
+            all_median_per_site{file,xlinker_id} = med_dist*voxel_size; %Distance for each for each simulation trajectory for a given crosslinker density
             all_occup_per_site{file,xlinker_id} = nnz(bmap)/(size(bmap,1)*size(bmap,2));%Occupancy for each simulation trajectory for a given crosslinker density
      end
 end
