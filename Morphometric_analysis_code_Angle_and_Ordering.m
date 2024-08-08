@@ -1,9 +1,15 @@
 xlinker_id = 0;
+angles_in_network = cell(50,1);
+mean_angles_in_network = zeros(50,1);
+angular_variation_in_network = zeros(50,1);
+order_parameter_in_network = zeros(50,1);
 
 for xlink = [0 0.25 0.5 0.75 1 1.25 1.5 1.75 2]
+
         xlinker_id = xlinker_id + 1;
-        name = strcat('case_rest_xperiodic_100_11_',num2str(xlink),'_');
-        list = get_directory_names(pwd,name);
+
+    for file = 1:50
+        name = strcat(pwd,'/','case_rest_xperiodic_100_11_',num2str(xlink),'_40_10_',num2str(file),'.txt');
 
         n_polymers = 100;
         n_links = 10;
@@ -13,66 +19,48 @@ for xlink = [0 0.25 0.5 0.75 1 1.25 1.5 1.75 2]
 
         tot_links = n_polymers * n_links;
 
-        angles_in_network = cell(length(list),1);
-        mean_std_angles_in_network = cell(length(list),1);
-        order_parameter_in_network = cell(length(list),1);
+        links_res = readmatrix(name);
+        links = links_res(all(~isnan(links_res),2),:);
+        
+        angles = zeros(tot_links,1);
+        order_param_per_link = zeros(tot_links,1);
 
-    for file = 1:length(list)
+        s = 1;
+        min1 = (s * tot_links) - tot_links + 1;
+        max1 = s * tot_links;
+           
+        count = 1;
+    
+        for i = min1:max1
+            a = links(i,3);
+            b = links(i,4);
+            theta = atand(b/a);
+            angles(count,1) = theta;
+            count = count+1;
+        end
 
-                txt = strcat(pwd,'/',list{file});
-                fn = getfn(txt, 'links.txt');
-                if(length(fn)>1)
-                    s = dir(fn{2});
-                    if(s.bytes==0)
-                        continue;
-                    else
-                        links_res = readmatrix(fn{2});
-                    end
-                else
-                    links_res = readmatrix(fn{1});
-                end
-                links_res = links_res(:,1:end);  
-                links = links_res(all(~isnan(links_res),2),:);
-                
-                angles = zeros(tot_links,1);
-                order_param_per_link = zeros(tot_links,1);
+        mean_angle = mean(angles); % returns mean angle of filaments in simulated network
+        angle_variation = std(angles); % returns angular variation of filaments in simulated network
+        
+        s = 1;
+        min1 = (s * tot_links) - tot_links + 1;
+        max1 = s * tot_links;
+        count = 1;
 
-            for s = length(links)/tot_links
-                min1 = (s * tot_links) - tot_links + 1;
-                max1 = s * tot_links;
-                count = 1;
-
-                for i = min1:max1
-                    a = links(i,3);
-                    b = links(i,4);
-                    theta = atand(b/a);
-                    angles(count,1) = theta;
-                    count = count+1;
-                end
+            for i = min1:max1
+                a = links(i,3);
+                b = links(i,4);
+                theta = atand(b/a);
+                order_param_per_link(count,1) = (2*cosd(theta-mean_angle)*cosd(theta-mean_angle)) - 1;
+                count = count+1;
             end
+        
+        order_param = mean(order_param_per_link); % returns the order parameter of simulated network
 
-            mean_angle = mean(angles); % returns mean angle of filaments in simulated network
-            angle_variation = std(angles); % returns angular variation of filaments in simulated network
-            
-            for s = length(links)/tot_links
-                min1 = (s * tot_links) - tot_links + 1;
-                max1 = s * tot_links;
-                count = 1;
-
-                for i = min1:max1
-                    a = links(i,3);
-                    b = links(i,4);
-                    theta = atand(b/a);
-                    order_param_per_link(count,1) = (2*cosd(theta-mean_angle)*cosd(theta-mean_angle)) - 1;
-                    count = count+1;
-                end
-            end
-            
-            order_param = mean(order_param_per_link); % returns the order parameter of simulated network
-
-            angles_in_network{file,xlinker_id} = angles;
-            mean_std_angles_in_network{file,xlinker_id} = [mean_angle,angle_variation];
-            order_parameter_in_network{file,xlinker_id} = order_param;
+        angles_in_network{file,xlinker_id} = angles;
+        mean_angles_in_network(file,xlinker_id) = mean_angle;
+        angular_variation_in_network(file,xlinker_id) = angle_variation  ;
+        order_parameter_in_network(file,xlinker_id) = order_param;
     end 
 end
 
@@ -136,10 +124,12 @@ function [ dirList ] = get_directory_names(dir_name,match)
 end
 
 function para = get_parallelness_value(all_angles_in_network) %function to calculate the parallelness from the angles of filament links
-parallelness = cell(size(all_angles_in_network,2),1);
+
+parallelness = zeros(size(all_angles_in_network,1),size(all_angles_in_network,2));
+
 for i = 1:size(all_angles_in_network,2)
 
-parallel_per_traj = zeros(size(all_angles_in_network,1),1);
+%parallel_per_traj = zeros(size(all_angles_in_network,1),1);
 
     for k = 1:size(all_angles_in_network,1)
         p = all_angles_in_network{k,i}+90;
@@ -164,10 +154,11 @@ parallel_per_traj = zeros(size(all_angles_in_network,1),1);
             a1 = abs(n0-n90);
             a2 = abs(n45-n135);
             para = (a1+a2)/total;
-            parallel_per_traj(k,1) = para;
+            % parallel_per_traj(k,1) = para;
+            parallelness(k,i) = para;
     end
 
-    parallelness{i,1} = parallel_per_traj;
+    % parallelness(i,1) = parallel_per_traj;
 
 end
     para = parallelness;
