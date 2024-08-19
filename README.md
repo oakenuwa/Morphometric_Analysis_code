@@ -18,7 +18,7 @@ To use and test the code:
 	+ Bundling: `Morphometric_analysis_code_LFB.m`
 5. To perform pca analysis of the _measured_ and _ground-truth_ morphometric parameters in MATLAB:
    * Import the output from Step 3 into MATLAB
-   * Run `Morphometric_analysis_code_pca_analysis.m`.
+   * Run `Morphometric_analysis_code_pca_analysis.m`
 
 Our simulation framework is based on [AFINES](https://github.com/Simfreed/AFINES.git) (Active FIlament NEtwork Simulation) developed by the Dinner group at the Univeristy of Chicago.
 Details of the simulaton can be found in 
