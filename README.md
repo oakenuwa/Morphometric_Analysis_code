@@ -14,4 +14,8 @@ To use the code:
 5. To perform pca analysis of the measured and ground-truth morphometric parameters, run Morphometric_analysis_code_pca_analysis.m.
 
 
-Our simulation framework is based on [AFINES](https://github.com/Simfreed/AFINES.git) (Active FIlament NEtwork Simulation) developed by the Dinner group at the Univeristy of Chicago. 
+Our simulation framework is based on [AFINES](https://github.com/Simfreed/AFINES.git) (Active FIlament NEtwork Simulation) developed by the Dinner group at the Univeristy of Chicago.
+Details of the simulaton can be found in 
+* Freedman, S. L., Banerjee, S., Hocky, G. M., & Dinner, A. R. (2017). [A Versatile Framework for Simulating the Dynamic Mechanical Structure of Cytoskeletal Networks.](https://doi.org/10.1016/j.bpj.2017.06.003)
+* Akenuwa, O. H., & Abel, S. M. (2023). [Organization and dynamics of cross-linked actin filaments in confined environments.](https://doi.org/10.1016/j.bpj.2022.11.2944)
+
