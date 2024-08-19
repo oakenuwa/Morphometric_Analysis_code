@@ -8,7 +8,7 @@
 This repository contains the analysis code to generate the morphometric parameters for the simulated and experimental actin networks. The analysis code is implemented in MATLAB and ImageJ.
 We have also included folders with the actin positions and image files of sample simulated actin networks to allow users to see how the morphometric parameters are extracted.
 
-To use the code:
+To use and test the code:
 1. Download the folder named `Simulated_actin_positions.zip`
 2. Download the folder named `Simulated_actin_images.zip`
 3. Run the ImageJ Macro named `Actin_Morphometrics.ijm` on the simulated actin images to get the _measured_ morphometric parameters
