@@ -12,11 +12,12 @@ To run a demo of the image analysis and ground-truth analysis code:
 1. Download the folder named `Simulated_actin_positions.zip`
 2. Download the folder named `Simulated_actin_images.zip`
 3. Run the ImageJ Macro named `Actin_Morphometrics.ijm` on the simulated actin images to get the _measured_ morphometric parameters
-4. To generate the _ground-truth_ morphometric parameters, run the following codes in MATLAB in any order on the `simulated_actin_positions.zip` and keep the outputs in the current workspace:
+   * **_Include a line about the steps to take to analyze the images, e.g. set smoothing radius, select pixel size, set cell area, etc_**
+5. To generate the _ground-truth_ morphometric parameters, run the following codes in MATLAB in any order on the `simulated_actin_positions.zip` and keep the outputs in the current workspace:
 	- Angle and Ordering parameters: `Morphometric_analysis_code_Angle_and_Ordering.m`
 	* Density parameters: `Morphometric_analysis_code_Distance_and_Occupancy.m`
 	+ Bundling: `Morphometric_analysis_code_LFB.m`
-5. To perform pca analysis of the _measured_ and _ground-truth_ morphometric parameters in MATLAB:
+6. To perform pca analysis of the _measured_ and _ground-truth_ morphometric parameters in MATLAB:
    * Import the output from Step 3 into MATLAB
    * Run `Morphometric_analysis_code_pca_analysis.m`
 
