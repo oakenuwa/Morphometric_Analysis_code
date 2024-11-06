@@ -150,7 +150,7 @@ nI = 0;                             // keep track of number of images
 for (f=0; f<list.length; f++) {     // for each file in directory ... ***
   if (endsWith(list[f],".tif")) {   // only work with TIFF files... ==
     nI++;
-    open(list[f]);                  // open image file
+    open(path+list[f]);                  // open image file
     image = getImageID();           // get image ID of original image
     run("8-bit");                   // make sure this is processed as an 8-bit image
     showStatus("processing file "+list[f]);
